@@ -51,11 +51,25 @@ var obj: StringRegexDictionary  = {
     jsFile: /\.js$/,
 }
 
-obj['cssFile'] = 'a';
+///obj['cssFile'] = 'a';
 Object.keys(obj).forEach(function (value, index, array){
 
-})
+});
 
+// 인터페이스  상위 개념
+interface  Person {
+    name: string;
+    age: number;
+}
 
+// 하위개념 확장 작은 집합일수록 더 많은 정보를 알 수 있다
+interface  Developer extends Person{
+    language: string;
+}
 
+var lucy: Developer ={
+    name: "lucy",
+    age: 29,
+    language: "ts"
+}
 
