@@ -78,7 +78,7 @@ logTextTextLength<string>(['hi']);
 interface LengthType {
     length: number;
 }
-         
+
 function logLength<T extends LengthType>(text: T): T{
     text.length;
     return text;
