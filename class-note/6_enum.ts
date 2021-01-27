@@ -18,7 +18,8 @@ function askQuestion(answer: Answer){
 }
 
 //askQuestion("에스"); // 다양한 형태로 넣을수 있는데
-askQuestion(Answer.Yes); // 다양한 형태로 넣을수 있는데
+askQuestion(Answer.Yes);
+// 다양한 형태로 넣을수 있는데
 // 이넘 (에서만 제공하는 데이터 만 가능) 으로 제약을 걸 수 있다
 // 정확한 코드를 쓸수 있고
 // 예외 케이스들을 잡을수있다
