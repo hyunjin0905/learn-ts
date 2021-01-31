@@ -1,14 +1,4 @@
-interface PhoneNumberDictionary {
-  [phone: string]: {
-    num: number;
-  };
-}
-
-interface Contact {
-  name: string;
-  address: string;
-  phones: PhoneNumberDictionary;
-}
+import { PhoneNumberDictionary, Contact } from './todo';
 
 enum PhoneType {
   Home = 'home',
