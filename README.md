@@ -1,4 +1,3 @@
-License & Copyright
-
-**Copyright © 2020 Captain Pangyo**
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.
+인프런
+타입스크립트 강의
+https://www.inflearn.com/course/타입스크립트-실전/lecture/61044?tab=curriculum
