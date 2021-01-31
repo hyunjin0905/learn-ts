@@ -2,7 +2,7 @@
   "compilerOptions": { // 타입스트맄트 -> 자바스크립트 변환 세부사항
     "allowJs": true,
     "checkJs": true,
-    "noImplicitAny": true
+    "noImplicitAny": false
   },
   "include": ["./src/**/*"]
 }
