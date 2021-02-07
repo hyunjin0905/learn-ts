@@ -9,10 +9,10 @@ interface  Product {
 
 
 // 상품목록을 받아오기 위한 api 함수
-function fetchProducts():Promise<Product[]> {
-
-
-}
+// function fetchProducts():Promise<Product[]> {
+//
+//
+// }
 
 // pick 을 이용해서 붎필요한 타입코드들을 줄일 수 있다
 interface ProductDetail {
