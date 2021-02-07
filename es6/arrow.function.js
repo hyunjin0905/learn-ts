@@ -14,7 +14,7 @@ var sum = (a, b) => {
 
 var sum = (a, b) => a + b;
 // 타입 스크립트 화살표 함수
-
-var sum = (a:number, b:number): number => {
-    return a + b;
-}
+//
+// var sum = (a:number, b:number): number => {
+//     return a + b;
+// }

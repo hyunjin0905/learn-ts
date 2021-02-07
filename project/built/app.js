@@ -34,11 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// ts
 // utils
 function $(selector) {
     return document.querySelector(selector);
 }
+// 자바스크립트 내장 객체는 타입추론이 된다.
 function getUnixTimestamp(date) {
     return new Date(date).getTime();
 }
@@ -66,19 +66,8 @@ function createSpinnerElement(id) {
 // state
 var isDeathLoading = false;
 var isRecoveredLoading = false;
-/**
- *
- * @typedef{object} CovidSummary
- * @property {Array<object>} Country
- */
-// api
-/*
-* @returns {Promise <CovidSummary>}
-* */
-function fetchCovidSummary() {
-    var url = 'https://api.covid19api.com/summary';
-    return axios.get(url);
-}
+var url = 'https://api.covid19api.com/summary';
+return axios.get(url);
 fetchCovidSummary().then(function (res) {
     console.log(res);
 });
