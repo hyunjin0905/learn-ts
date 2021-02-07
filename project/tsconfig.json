@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES3",
+    "outDir": "./built",
+    "moduleResolution": "classic"
+  },
+  "include": ["./src"]
+}
