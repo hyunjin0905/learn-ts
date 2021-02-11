@@ -9,7 +9,11 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@types/chart.js": "^2.9.30",
+    "axios": "^0.21.1",
+    "chart.js": "^2.9.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",

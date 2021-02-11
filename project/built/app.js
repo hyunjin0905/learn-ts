@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,17 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// utils
+exports.__esModule = true;
+//utils
 function $(selector) {
     return document.querySelector(selector);
 }
-// 자바스크립트 내장 객체는 타입추론이 된다.
 function getUnixTimestamp(date) {
+    // 자바스크립트 내장 객체는 타입추론이 된다.
     return new Date(date).getTime();
 }
 // DOM
+var a;
 var confirmedTotal = $('.confirmed-total');
-var deathsTotal = $('.deaths');
+var deathsTotal = $('.deaths'); // 단언하기 전  :Element
 var recoveredTotal = $('.recovered');
 var lastUpdatedTime = $('.last-updated-time');
 var rankList = $('.rank-list');
@@ -66,22 +69,30 @@ function createSpinnerElement(id) {
 // state
 var isDeathLoading = false;
 var isRecoveredLoading = false;
-var url = 'https://api.covid19api.com/summary';
-return axios.get(url);
-fetchCovidSummary().then(function (res) {
-    console.log(res);
-});
+/**
+ *
+ * @typedef{object} CovidSummary
+ * @property {Array<object>} Country
+ */
+function fetchCovidSummary() {
+    var url = 'https://api.covid19api.com/summary';
+    return axios.get(url);
+}
+fetchCovidSummary().then(function (res) { return res.data; });
+var CovidStatus;
+(function (CovidStatus) {
+    CovidStatus["CONFIRMED"] = "confirmed";
+    CovidStatus["RECOVERED"] = "recovered";
+    CovidStatus["Deaths"] = "deaths";
+})(CovidStatus || (CovidStatus = {}));
 function fetchCountryInfo(countryCode, status) {
-    // params: confirmed, recovered, deaths
     var url = "https://api.covid19api.com/country/" + countryCode + "/status/" + status;
     return axios.get(url);
 }
-// methods
 function startApp() {
     setupData();
     initEvents();
 }
-// events
 function initEvents() {
     rankList.addEventListener('click', handleListClick);
 }
@@ -105,13 +116,13 @@ function handleListClick(event) {
                     clearRecoveredList();
                     startLoadingAnimation();
                     isDeathLoading = true;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'deaths')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.Deaths)];
                 case 1:
                     deathResponse = (_a.sent()).data;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'recovered')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.RECOVERED)];
                 case 2:
                     recoveredResponse = (_a.sent()).data;
-                    return [4 /*yield*/, fetchCountryInfo(selectedId, 'confirmed')];
+                    return [4 /*yield*/, fetchCountryInfo(selectedId, CovidStatus.CONFIRMED)];
                 case 3:
                     confirmedResponse = (_a.sent()).data;
                     endLoadingAnimation();
@@ -218,7 +229,9 @@ function setChartData(data) {
     var chartData = data.slice(-14).map(function (value) { return value.Cases; });
     var chartLabel = data
         .slice(-14)
-        .map(function (value) { return new Date(value.Date).toLocaleDateString().slice(5, -1); });
+        .map(function (value) {
+        return new Date(value.Date).toLocaleDateString().slice(5, -1);
+    });
     renderChart(chartData, chartLabel);
 }
 function setTotalConfirmedNumber(data) {
