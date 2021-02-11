@@ -1,3 +1,4 @@
+//utils
 function $(selector: string) {
   return document.querySelector(selector);
 }
@@ -8,11 +9,11 @@ function getUnixTimestamp(date: Date) {
 }
 
 // DOM
-var a: Element | HTMLElement | HTMLParagraphElement
+let a: Element | HTMLElement | HTMLParagraphElement;
 const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
 const deathsTotal = $('.deaths') as HTMLParagraphElement; // 단언하기 전  :Element
 const recoveredTotal = $('.recovered') as HTMLParagraphElement;
-const lastUpdatedTime = $('.last-updated-time')as HTMLParagraphElement;
+const lastUpdatedTime = $('.last-updated-time') as HTMLParagraphElement;
 const rankList = $('.rank-list');
 const deathsList = $('.deaths-list');
 const recoveredList = $('.recovered-list');
