@@ -1,4 +1,4 @@
-interface Country {
+export interface Country {
   Country: string;
   CountryCode: string;
   Date: string;
@@ -22,13 +22,13 @@ interface Global {
 }
 
 export interface CovidSummaryResponse {
-  Counties: Country[];
+  Countries: Country[];
   Date: string;
   Global: Global;
   Message: string;
 }
 
-interface CountrySummaryInfo {
+export interface CountrySummaryInfo {
   Cases: number;
   City: string;
   CityCode: string;

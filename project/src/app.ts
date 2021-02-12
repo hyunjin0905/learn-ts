@@ -1,6 +1,11 @@
 // 라이브러리 로딩
 // 변수 , 함수 임포트 문법
-import { CovidSummaryResponse, CountrySummaryResponse } from './Covid/index';
+import {
+  CovidSummaryResponse,
+  CountrySummaryResponse,
+  Country,
+  CountrySummaryInfo,
+} from './Covid/index';
 import axios, { AxiosResponse } from 'axios';
 import Chart from 'chart.js';
 
@@ -9,12 +14,12 @@ function $(selector: string) {
   return document.querySelector(selector);
 }
 
-function getUnixTimestamp(date: Date) {
+function getUnixTimestamp(date: Date | string) {
   // 자바스크립트 내장 객체는 타입추론이 된다.
   return new Date(date).getTime();
 }
 
-// DOM
+// DOM                                                                                                       S
 let a: Element | HTMLElement | HTMLParagraphElement;
 const confirmedTotal = $('.confirmed-total') as HTMLSpanElement;
 const deathsTotal = $('.deaths') as HTMLParagraphElement; // 단언하기 전  :Element
@@ -64,8 +69,11 @@ enum CovidStatus {
   Deaths = 'deaths',
 }
 
-function fetchCountryInfo(countryCode: string, status: CovidStatus) {
-  const url = `https://api.covid19api.com/country/${countryCode}/status/${status}`;
+function fetchCountryInfo(
+  countryName: string,
+  status: CovidStatus
+): Promise<AxiosResponse<CountrySummaryResponse>> {
+  const url = `https://api.covid19api.com/country/${countryName}/status/${status}`;
   return axios.get(url);
 }
 
@@ -117,11 +125,12 @@ async function handleListClick(event: any) {
   isDeathLoading = false;
 }
 
-function setDeathsList(data: any) {
+function setDeathsList(data: CountrySummaryResponse) {
   const sorted = data.sort(
-    (a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
+    (a: CountrySummaryInfo, b: CountrySummaryInfo) =>
+      getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
   );
-  sorted.forEach((value: any) => {
+  sorted.forEach((value: CountrySummaryInfo) => {
     const li = document.createElement('li');
     li.setAttribute('class', 'list-item-b flex align-center');
     const span = document.createElement('span');
@@ -139,13 +148,14 @@ function clearDeathList() {
   deathsList.innerHTML = null;
 }
 
-function setTotalDeathsByCountry(data: any) {
-  deathsTotal.innerText = data[0].Cases;
+function setTotalDeathsByCountry(data: CountrySummaryResponse) {
+  deathsTotal.innerText = data[0].Cases.toString();
 }
 
-function setRecoveredList(data: any) {
+function setRecoveredList(data: CountrySummaryResponse) {
   const sorted = data.sort(
-    (a: any, b: any) => getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
+    (a: CountrySummaryInfo, b: CountrySummaryInfo) =>
+      getUnixTimestamp(b.Date) - getUnixTimestamp(a.Date)
   );
   sorted.forEach((value: any) => {
     const li = document.createElement('li');
@@ -165,8 +175,8 @@ function clearRecoveredList() {
   recoveredList.innerHTML = null;
 }
 
-function setTotalRecoveredByCountry(data: any) {
-  recoveredTotal.innerText = data[0].Cases;
+function setTotalRecoveredByCountry(data: CountrySummaryResponse) {
+  recoveredTotal.innerText = data[0].Cases.toString();
 }
 
 function startLoadingAnimation() {
@@ -219,37 +229,37 @@ function setChartData(data: any) {
   renderChart(chartData, chartLabel);
 }
 
-function setTotalConfirmedNumber(data: any) {
+function setTotalConfirmedNumber(data: CovidSummaryResponse) {
   confirmedTotal.innerText = data.Countries.reduce(
-    (total: any, current: any) => (total += current.TotalConfirmed),
+    (total: number, current: Country) => (total += current.TotalConfirmed),
     0
-  );
+  ).toString();
 }
 
-function setTotalDeathsByWorld(data: any) {
+function setTotalDeathsByWorld(data: CovidSummaryResponse) {
   deathsTotal.innerText = data.Countries.reduce(
-    (total: any, current: any) => (total += current.TotalDeaths),
+    (total: number, current: Country) => (total += current.TotalDepths),
     0
-  );
+  ).toString();
 }
 
-function setTotalRecoveredByWorld(data: any) {
+function setTotalRecoveredByWorld(data: CovidSummaryResponse) {
   recoveredTotal.innerText = data.Countries.reduce(
-    (total: any, current: any) => (total += current.TotalRecovered),
+    (total: number, current: Country) => (total += current.TotalRecovered),
     0
-  );
+  ).toString();
 }
 
-function setCountryRanksByConfirmedCases(data: any) {
+function setCountryRanksByConfirmedCases(data: CovidSummaryResponse) {
   const sorted = data.Countries.sort(
-    (a: any, b: any) => b.TotalConfirmed - a.TotalConfirmed
+    (a: Country, b: Country) => b.TotalConfirmed - a.TotalConfirmed
   );
-  sorted.forEach((value: any) => {
+  sorted.forEach((value: Country) => {
     const li = document.createElement('li');
     li.setAttribute('class', 'list-item flex align-center');
     li.setAttribute('id', value.Slug);
     const span = document.createElement('span');
-    span.textContent = value.TotalConfirmed;
+    span.textContent = value.TotalConfirmed.toString();
     span.setAttribute('class', 'cases');
     const p = document.createElement('p');
     p.setAttribute('class', 'country');
@@ -260,7 +270,7 @@ function setCountryRanksByConfirmedCases(data: any) {
   });
 }
 
-function setLastUpdatedTimestamp(data: any) {
+function setLastUpdatedTimestamp(data: CovidSummaryResponse) {
   lastUpdatedTime.innerText = new Date(data.Date).toLocaleString();
 }
 
