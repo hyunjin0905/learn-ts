@@ -1,6 +1,8 @@
 // 라이브러리 로딩
 // 변수 , 함수 임포트 문법
-import { CovidSummaryResponse } from './Covid/index';
+import { CovidSummaryResponse, CountrySummaryResponse } from './Covid/index';
+import axios, { AxiosResponse } from 'axios';
+import Chart from 'chart.js';
 
 //utils
 function $(selector: string) {
